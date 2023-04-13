@@ -20,10 +20,10 @@ Route::get('/', function () {
 // admin/profile/create にアクセスしたら ProfileController の add Action に、
 // admin/profile/edit にアクセスしたら ProfileController の edit Action に割り当てるように設定してください
 use App\Http\controllers\Admin\ProfileController;
-Route::controller(ProfileController::class)->prefix('admin')->group(function()){
+Route::controller(ProfileController::class)->prefix('admin')->group(function(){
     Route::get('profile/create', 'add');
     Route::get('profile/edit', 'edit');    
-
+});
 // Laravel 09課題３「http://XXXXXX.jp/XXX というアクセスが来たときに、 AAAControllerのbbbという
 // Action に渡すRoutingの設定」を書いてみてください
 
