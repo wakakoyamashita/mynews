@@ -16,8 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
     
-use App\Http\controllers\Admin\NewsController;
-Route::controller(NewsController::class)->prefix('admin')->group(function()){
-    Route::get('news/create', 'add');
+// Laravel 09課題４【応用】 前章でAdmin/ProfileControllerを作成し、add Action, edit Actionを追加しました。web.phpを編集して、
+// admin/profile/create にアクセスしたら ProfileController の add Action に、
+// admin/profile/edit にアクセスしたら ProfileController の edit Action に割り当てるように設定してください
+use App\Http\controllers\Admin\ProfileController;
+Route::controller(ProfileController::class)->prefix('admin')->group(function()){
+    Route::get('profile/create', 'add');
+    Route::get('profile/edit', 'edit');    
+
+// Laravel 09課題３「http://XXXXXX.jp/XXX というアクセスが来たときに、 AAAControllerのbbbという
+// Action に渡すRoutingの設定」を書いてみてください
+
+Route::controller(AAAController::class)->group(function() {
+    Route::get('XXX', 'bbb');
 });
 
+
+    
