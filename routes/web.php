@@ -37,7 +37,6 @@ Route::controller(ProfileController::class)->prefix('admin')->name('admin.')->mi
     Route::post('profile/create', 'create')->name('profile.create');
     Route::get('profile/edit', 'edit')->name('profile.edit');
     Route::post('profile/edit', 'update')->name('profile.update');
-    
 });
 
 // Laravel 09課題３「http://XXXXXX.jp/XXX というアクセスが来たときに、 AAAControllerのbbbという
@@ -53,3 +52,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 use App\Http\Controllers\NewsController as PublicNewsController;
 Route::get('/', [PublicNewsController::class, 'index'])->name('news.index');
+
+use App\Http\Controllers\ProfileController as PublicProfileController;
+Route::get('/profile', [PublicProfileController::class, 'index'])->name('profile.index');
