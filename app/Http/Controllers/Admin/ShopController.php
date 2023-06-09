@@ -6,17 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 // 以下の1行を追記することで、News Modelが扱えるようになる
-use App\Models\News;
+use App\Models\Shop;
 
 use App\Models\History;
 
 use Carbon\Carbon;
 
-class NewsController extends Controller
+class ShopController extends Controller
 {
     public function add()
     {
-        return view('admin.news.create');
+        return view('admin.shop.create');
     }
 
     public function create(Request $request)
@@ -24,15 +24,15 @@ class NewsController extends Controller
         // 以下を追記
         // Validationを行う
         // News::$rulesは、News.phpファイルの$rules変数を呼び出すための書き方になります。
-        $this->validate($request, News::$rules);
+        $this->validate($request, Shop::$rules);
 
-        $news = new News;
+        $shop = new Shop;
         $form = $request->all();
 
         // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
         if (isset($form['image'])) {
             $path = $request->file('image')->store('public/image');
-            $news->image_path = basename($path);
+            $shop->image_path = basename($path);
         } else {
             $news->image_path = null;
         }
@@ -46,7 +46,7 @@ class NewsController extends Controller
         $news->fill($form);
         $news->save();
 
-        return redirect('admin/news/create');
+        return redirect('admin/shop/create');
     }
     
     public function index(Request $request)
@@ -59,60 +59,60 @@ class NewsController extends Controller
             // それ以外はすべてのニュースを取得する
             $posts = News::all();
         }
-        return view('admin.news.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+        return view('admin.shop.index', ['posts' => $posts, 'cond_title' => $cond_title]);
     }
     
     public function edit(Request $request)
     {
         // News Modelからデータを取得する
-        $news = News::find($request->id);
-        if (empty($news)) {
+        $shop = Shop::find($request->id);
+        if (empty($shop)) {
             abort(404);
         }
-        return view('admin.news.edit', ['news_form' => $news]);
+        return view('admin.shop.edit', ['shop_form' => $shop]);
     }
 
     public function update(Request $request)
     {
         // Validationをかける
-        $this->validate($request, News::$rules);
+        $this->validate($request, Shop::$rules);
         // News Modelからデータを取得する
-        $news = News::find($request->id);
+        $shop = Shop::find($request->id);
         // 送信されてきたフォームデータを格納する
-        $news_form = $request->all();
+        $shop_form = $request->all();
 
         if ($request->remove == 'true') {
-            $news_form['image_path'] = null;
+            $shop_form['image_path'] = null;
         } elseif ($request->file('image')) {
             $path = $request->file('image')->store('public/image');
-            $news_form['image_path'] = basename($path);
+            $shop_form['image_path'] = basename($path);
         } else {
-            $news_form['image_path'] = $news->image_path;
+            $shop_form['image_path'] = $shop->image_path;
         }
 
-        unset($news_form['image']);
-        unset($news_form['remove']);
-        unset($news_form['_token']);
+        unset($shop_form['image']);
+        unset($shop_form['remove']);
+        unset($shop_form['_token']);
 
         // 該当するデータを上書きして保存する
-        $news->fill($news_form)->save();
+        $shop->fill($shop_form)->save();
         
         $history = new History();
-        $history->news_id = $news->id;
+        $history->shop_id = $shop->id;
         $history->edited_at = Carbon::now();
         $history->save();
 
-        return redirect('admin/news');
+        return redirect('admin/shop');
     }
     
     public function delete(Request $request)
     {
         // 該当するNews Modelを取得
-        $news = News::find($request->id);
+        $shop = Shop::find($request->id);
 
         // 削除する
-        $news->delete();
+        $shop->delete();
 
-        return redirect('admin/news/');
+        return redirect('admin/shop/');
     }
 }

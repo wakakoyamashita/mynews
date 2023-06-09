@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'ニュースの編集')
+@section('title', 'ショップ情報の編集')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>ニュース編集</h2>
-                <form action="{{ route('admin.news.update') }}" method="post" enctype="multipart/form-data">
+                <h2>ショップ情報編集</h2>
+                <form action="{{ route('admin.shop.update') }}" method="post" enctype="multipart/form-data">
                     @if (count($errors) > 0)
                         <ul>
                             @foreach($errors->all() as $e)
@@ -15,15 +15,15 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-2" for="title">タイトル</label>
+                        <label class="col-md-2" for="title">ショップ名</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="title" value="{{ $news_form->title }}">
+                            <input type="text" class="form-control" name="title" value="{{ $shop_form->title }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2" for="body">本文</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="body" rows="20">{{ $news_form->body }}</textarea>
+                            <textarea class="form-control" name="body" rows="20">{{ $shop_form->body }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -31,7 +31,7 @@
                         <div class="col-md-10">
                             <input type="file" class="form-control-file" name="image">
                             <div class="form-text text-info">
-                                設定中: {{ $news_form->image_path }}
+                                設定中: {{ $shop_form->image_path }}
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">

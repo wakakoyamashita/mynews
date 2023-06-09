@@ -1,17 +1,17 @@
 {{-- layouts/profile.blade.phpを読み込む --}}
-@extends('layouts.profile')
+@extends('layouts.event')
 
 
 {{-- layouts.blade.phpの@yield('title')に'プロフィール'を埋め込む --}}
-@section('title', 'MYプロフィール')
+@section('title', 'イベント情報')
 
 {{-- layouts.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>MYプロフィール</h2>
-                <form action="{{ route('admin.profile.create') }}" method="post" enctype="multipart/form-data">
+                <h2>イベント情報</h2>
+                <form action="{{ route('admin.event.create') }}" method="post" enctype="multipart/form-data">
                     @if (count($errors) > 0)
                         <ul>
                             @foreach($errors->all() as $e)
@@ -20,26 +20,26 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-2">氏名(name)</label>
+                        <label class="col-md-2">イベント名</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">性別(gender)</label>
+                        <label class="col-md-2">期間</label>
                         <div class="col-md-10">
                             <label><input type="radio" name="gender" value="male">男性</label>
                             <label><input type="radio" name="gender" value="female">女性</label>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">趣味(hobby)</label>
+                        <label class="col-md-2">場所</label>
                         <div class="col-md-10">
                             <textarea class="form-control" name="hobby" rows="5">{{ old('hobby') }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">自己紹介欄(introduction)</label>
+                        <label class="col-md-2">概要</label>
                         <div class="col-md-10">
                             <textarea class="form-control" name="introduction" rows="10">{{ old('in') }}</textarea>
                         </div>

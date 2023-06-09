@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-@extends('layouts.profile')
-@section('title', 'プロフィール編集')
+@extends('layouts.event')
+@section('title', 'イベント情報編集')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>プロフィール編集</h2>
-                <form action="{{ route('admin.profile.update') }}" method="post" enctype="multipart/form-data">
+                <h2>イベント情報編集</h2>
+                <form action="{{ route('admin.event.update') }}" method="post" enctype="multipart/form-data">
                     @if (count($errors) > 0)
                         <ul>
                             @foreach($errors->all() as $e)
@@ -16,26 +16,26 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-2" for="name">氏名</label>
+                        <label class="col-md-2" for="name">イベント名</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" name="name" value="{{ $profile_form->name }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2" for="gender">性別</label>
+                        <label class="col-md-2" for="gender">期間</label>
                         <div class="col-md-10">
                             <label><input type="radio" name="gender" value="male" {{ $profile_form->gender == 'male' ? 'checked' : '' }}>男性</label>
                             <label><input type="radio" name="gender" value="female" {{ $profile_form->gender == 'female' ? 'checked' : '' }}>女性</label>
                         </div>
                     </div>
                       <div class="form-group row">
-                        <label class="col-md-2" for="hobby">趣味</label>
+                        <label class="col-md-2" for="hobby">場所</label>
                         <div class="col-md-10">
                             <textarea class="form-control" name="hobby" rows="5">{{ $profile_form->hobby }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2" for="introduction">自己紹介</label>
+                        <label class="col-md-2" for="introduction">概要</label>
                         <div class="col-md-10">
                             <textarea class="form-control" name="introduction" rows="10">{{ $profile_form->introduction }}</textarea>
                         </div>

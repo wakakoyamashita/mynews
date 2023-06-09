@@ -5,25 +5,25 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Profile;
+use App\Models\Event;
 
-use App\Models\ProfileHistory;
+use App\Models\EventHistory;
 
 use Carbon\Carbon;
 
-class ProfileController extends Controller
+class EventController extends Controller
 {
     public function add()
     {
-        return view('admin.profile.create');
+        return view('admin.event.create');
     }
 
     public function create(Request $request)
     {
 
-        $this->validate($request, Profile::$rules);
+        $this->validate($request, Event::$rules);
         
-        $profile = new Profile;
+        $event = new Event;
         $form = $request->all();
         
         // フォームから送信されてきた_tokenを削除する
@@ -32,40 +32,40 @@ class ProfileController extends Controller
         unset($form['image']);
 
         // データベースに保存する
-        $profile->fill($form);
-        $profile->save();
+        $event->fill($form);
+        $event->save();
         
-        return redirect('admin/profile/create');
+        return redirect('admin/event/create');
     }
 
     public function edit(Request $request)
     {
-        $profile = Profile::find($request->id);
-        if (empty($profile)) {
+        $event = Event::find($request->id);
+        if (empty($event)) {
             abort(404);
         }
 //        dd($profile);
-        return view('admin.profile.edit', ['profile_form' => $profile]);
+        return view('admin.event.edit', ['event_form' => $event]);
     }
     
      public function update(Request $request)
     {
         // Validationをかける
-        $this->validate($request, Profile::$rules);
+        $this->validate($request, Event::$rules);
         // Profile Modelからデータを取得する
-        $profile = Profile::find($request->id);
+        $event = Event::find($request->id);
         // 送信されてきたフォームデータを格納する
-        $profile_form = $request->all();
+        $event_form = $request->all();
 
-        unset($profile_form['_token']);
+        unset($event_form['_token']);
 
         // 該当するデータを上書きして保存する
-        $profile->fill($profile_form)->save();
+        $event->fill($event_form)->save();
         
-        $p_history = new ProfileHistory();
-        $p_history->profile_id = $profile->id;
-        $p_history->edited_at = Carbon::now();
-        $p_history->save();
+        $e_history = new EventHistory();
+        $e_history->event_id = $event->id;
+        $e_history->edited_at = Carbon::now();
+        $e_history->save();
         
         return redirect('/');
     } 
